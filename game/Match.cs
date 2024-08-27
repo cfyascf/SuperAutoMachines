@@ -1,8 +1,8 @@
 namespace superautomachines.game;
 public class Match
 {
-    public int Coins { get; set; } = 10;
     public int Life { get; set; } = 5;
+    public int Trophies { get; set; } = 0;
     public Round crrRound = null;
     public static Match crr = null;
     public static Match Current 
@@ -27,6 +27,19 @@ public class Match
     public void Start()
     {
         crrRound = Round.NewRound();
-        var result = crrRound.Play();
+        crrRound.BuildOpponentsComp();
+    }
+
+    public void Play()
+    {
+        RoundResult result;
+        while(Life > 0)
+        {
+            result = crrRound.FightComp();
+            if(result == RoundResult.win)
+                Trophies++;
+            else
+                Life--;
+        }
     }
 }

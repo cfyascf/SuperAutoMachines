@@ -16,4 +16,20 @@ public abstract class Machine
         Attack = attack;
         Life = life;
     }
+
+    public RoundResult Fight(Machine enemy)
+    {
+        enemy.Life -= Attack;
+        Life -= enemy.Attack;
+
+        if(Life <= 0)
+            return RoundResult.loss;
+
+        if(enemy.Life <= 0)
+            return RoundResult.win;
+
+        return RoundResult.even;
+    }
+
+    // public abstract void ApplyBuff();
 }

@@ -1,9 +1,12 @@
-﻿namespace superautomachines;
+﻿using superautomachines.game;
+
+namespace superautomachines;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hello world");
+        var game = Match.NewMatch();
+        game.Start();
     }
 }
