@@ -21,4 +21,9 @@ public static class TierTwoGenerator
 
         return Possibilities[rnd];
     }
+
+    public static void Show()
+    {
+        
+    }
 }

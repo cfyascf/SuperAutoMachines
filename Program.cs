@@ -1,4 +1,5 @@
 ﻿using superautomachines.game;
+using superautomachines.machines;
 
 namespace superautomachines;
 
@@ -6,7 +7,6 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var game = Match.NewMatch();
-        game.Start();
+        Game.Init();
     }
 }
