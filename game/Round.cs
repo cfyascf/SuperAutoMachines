@@ -1,4 +1,3 @@
-using System.Runtime.ConstrainedExecution;
 using superautomachines.machines;
 
 namespace superautomachines.game;
@@ -8,7 +7,6 @@ public class Round
     public List<Machine> Opponents { get; set; } = new();
     public List<Machine> Players { get; set; } = new();
     public int Coins { get; set; } = 10;
-    public Market Market { get; set; } = null;
     private static Round crr = null;
 
     public static Round Current
@@ -20,25 +18,37 @@ public class Round
         }
     }
 
-    public static Round NewRound()
+    public static void NewRound()
     {
         crr = new Round();
-        
-        return Current;
+        Current.BuildOpponentsComp();
+        Market.NewMarket();
     }
 
     public void BuildOpponentsComp()
     {
+        Market.NewMarket();
         Random seed = new Random();
         var teamsize = seed.Next(3, 6);
         Opponents = TeamGenerator.Generate(teamsize);
     }
 
-    public void AddTeamPlayer(Machine m)
+    public RoundResult Play()
     {
-        if(Players.Count < 5)
-            Coins -= Market.BuyMachine(m);
-            Players.Add(m);
+        if(Match.Current.Life <= 0)
+            return RoundResult.none;
+        
+        if(Current.FightComp() == RoundResult.win)
+        {
+            Match.Current.Trophies++;
+            return RoundResult.win;
+        }
+
+        else
+        {
+            Match.Current.Life--;
+            return RoundResult.loss;
+        }
     }
 
     public RoundResult FightComp()
@@ -47,7 +57,7 @@ public class Round
         {
             RoundResult result = RoundResult.even;
             Machine crrPlayer = Players.Last();
-            Machine crrOpponent = Opponents.Last();
+            Machine crrOpponent = Opponents.First();
 
             while(result == RoundResult.even)
             {

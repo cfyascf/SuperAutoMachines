@@ -33,13 +33,22 @@ public class Market
         Machines = TeamGenerator.Generate(3);
     }
 
-    public int BuyMachine(Machine m)
+    public bool BuyMachine(Machine m)
     {
         if(!Machines.Contains(m))
-            return 0;
+            return false;
+
+        if(Round.Current.Players.Count >= 5)
+            return false;
+
+        if(Round.Current.Coins < m.Price)
+            return false;
+
+        Round.Current.Coins -= m.Price;
+        Round.Current.Players.Add(m);
 
         Machines.Remove(m);
 
-        return m.Price;
+        return true;
     }
 }

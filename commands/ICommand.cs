@@ -1,6 +1,7 @@
 namespace superautomachines.commands;
+using superautomachines.commands.data;
 
-public interface ICommand<T>
+public interface ICommand
 {
-    public void Execute(T args = default);
+    public CommandResponse Execute(CommandArgs args = default);
 }

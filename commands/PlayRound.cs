@@ -2,11 +2,11 @@ using superautomachines.commands;
 using superautomachines.game;
 using superautomachines.commands.data;
 
-public class NewMatch : ICommand
+public class PlayRound : ICommand
 {
     public CommandResponse Execute(CommandArgs args)
     {
-        Match.NewMatch();
-        return CommandResponse.Successfull;
+        var success = Round.Current.Play();
+        return new RoundCommandResponse(true, success);
     }
 }

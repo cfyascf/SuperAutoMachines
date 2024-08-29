@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperAutoMachines", "SuperAutoMachines.csproj", "{D740B37E-C802-4C47-85B2-4581D006E875}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperAutoMachines", "SuperAutoMachines.csproj", "{A212D31B-A332-4EE1-8F51-AB9BBC0E0026}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D740B37E-C802-4C47-85B2-4581D006E875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D740B37E-C802-4C47-85B2-4581D006E875}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D740B37E-C802-4C47-85B2-4581D006E875}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D740B37E-C802-4C47-85B2-4581D006E875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A212D31B-A332-4EE1-8F51-AB9BBC0E0026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A212D31B-A332-4EE1-8F51-AB9BBC0E0026}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A212D31B-A332-4EE1-8F51-AB9BBC0E0026}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A212D31B-A332-4EE1-8F51-AB9BBC0E0026}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
