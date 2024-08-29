@@ -3,7 +3,7 @@ using superautomachines.commands.data;
 public class RoundCommandResponse : CommandResponse
 {
     public RoundResult RoundResult { get; set; }
-    public RoundCommandResponse(bool success, RoundResult result) : base(success)
+    public RoundCommandResponse(RoundResult result, bool success = true) : base(success)
     {
         RoundResult = result;
     }

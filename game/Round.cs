@@ -33,52 +33,29 @@ public class Round
         Opponents = TeamGenerator.Generate(teamsize);
     }
 
-    public RoundResult Play()
+    public SingleFightResult PlayFight()
     {
-        if(Match.Current.Life <= 0)
-            return RoundResult.none;
-        
-        if(Current.FightComp() == RoundResult.win)
-        {
-            Match.Current.Trophies++;
-            return RoundResult.win;
-        }
+        RoundResult result = RoundResult.even;
+        Machine crrPlayer = Players.Last();
+        Machine crrOpponent = Opponents.First();
 
-        else
+        while (result == RoundResult.even)
         {
-            Match.Current.Life--;
-            return RoundResult.loss;
-        }
-    }
+            result = crrPlayer.Fight(crrOpponent);
 
-    public RoundResult FightComp()
-    {
-        while(true)
-        {
-            RoundResult result = RoundResult.even;
-            Machine crrPlayer = Players.Last();
-            Machine crrOpponent = Opponents.First();
-
-            while(result == RoundResult.even)
+            if (result == RoundResult.win)
             {
-                result = crrPlayer.Fight(crrOpponent);
-
-                if(result == RoundResult.win)
-                {
-                    Opponents.Remove(crrOpponent);
-                }
-
-                if(result == RoundResult.loss)
-                {
-                    Players.Remove(crrPlayer);
-                }
+                Opponents.Remove(crrOpponent);
+                return new SingleFightResult(crrPlayer, crrOpponent, crrPlayer);
             }
 
-            if(Opponents.Count == 0)
-                return RoundResult.win;
-
-            if(Players.Count == 0)
-                return RoundResult.loss;
+            if (result == RoundResult.loss)
+            {
+                Players.Remove(crrPlayer);
+                return new SingleFightResult(crrPlayer, crrOpponent, crrOpponent);
+            }
         }
+
+        return null;
     }
 }

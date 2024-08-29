@@ -1,4 +1,5 @@
 using superautomachines.game;
+using superautomachines.machines;
 
 public static class Panels
 {
@@ -97,16 +98,40 @@ public static class Panels
         ");
     }
 
+    public static void YouWon()
+    {
+        Console.WriteLine(@"
+             __   __           __        __          _ 
+             \ \ / /__  _   _  \ \      / /__  _ __ | |
+              \ V / _ \| | | |  \ \ /\ / / _ \| '_ \| |
+               | | (_) | |_| |   \ V  V / (_) | | | |_|
+               |_|\___/ \__,_|    \_/\_/ \___/|_| |_(_)
+        ");
+    }
+
+    public static void GameOver()
+    {
+        Console.WriteLine(@"
+             ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗ 
+             ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
+             ██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║██║   ██║█████╗  ██████╔╝
+             ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+             ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
+              ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
+        ");
+    }
+
     public static void ShowMarket()
     {
         PMarket();
         Console.WriteLine("* Your coins: " + Round.Current.Coins);
-        if(Market.Current.Machines.Count == 0) {
+        if (Market.Current.Machines.Count == 0)
+        {
             Console.WriteLine("...empty...");
         }
 
-        var l = 0;  
-        foreach(var machine in Market.Current.Machines)
+        var l = 0;
+        foreach (var machine in Market.Current.Machines)
         {
             l++;
             Console.WriteLine(l + ". " + machine.Name.ToUpper());
@@ -121,17 +146,14 @@ public static class Panels
     public static void ShowPlayersTeam()
     {
         YourYeam();
-        if(Round.Current.Players.Count == 0) {
+        if (Round.Current.Players.Count == 0)
+        {
             Console.WriteLine("...empty...");
         }
 
-        foreach(var machine in Round.Current.Players)
+        foreach (var machine in Round.Current.Players)
         {
-            Console.WriteLine(machine.Name.ToUpper());
-            Console.Write("Attack: " + machine.Attack);
-            Console.Write(" - Life: " + machine.Life);
-            Console.Write(" - Tier: " + machine.Tier);
-            Console.WriteLine();
+            ShowMachine(machine);
         }
         Console.WriteLine();
     }
@@ -139,13 +161,47 @@ public static class Panels
     public static void ShowOpponentsTeam()
     {
         Opponents();
-        foreach(var machine in Round.Current.Opponents)
+        foreach (var machine in Round.Current.Opponents)
         {
-            Console.WriteLine(machine.Name.ToUpper());
-            Console.Write("Attack: " + machine.Attack);
-            Console.Write(" - Life: " + machine.Life);
-            Console.Write(" - Tier: " + machine.Tier);
+            ShowMachine(machine);
             Console.WriteLine();
         }
+    }
+
+    public static void ShowMachine(Machine machine)
+    {
+        Console.WriteLine(machine.Name.ToUpper());
+        Console.Write("Attack: " + machine.Attack);
+        Console.Write(" - Life: " + machine.Life);
+        Console.Write(" - Tier: " + machine.Tier);
+        Console.WriteLine();
+    }
+
+    public static void IntroduceFight()
+    {
+        ShowOpponentsTeam();
+        Util.Sleep(1.5);
+        VS();
+        Util.Sleep(1.1);
+        ShowPlayersTeam();
+        Util.Sleep(1.5);
+    }
+
+    public static void FinalMessage(bool result)
+    {
+        if(result)
+            YouWon();
+        else
+            PYouLost();
+
+        Util.Sleep(1);
+        Console.WriteLine("You " + (result? "won":"lost") + " this round!");
+        Util.Sleep(0.5);
+        Console.WriteLine("Trophies conquered: " + Match.Current.Trophies);
+        Util.Sleep(0.5);
+        Console.WriteLine("Life remaining: " + Match.Current.Life);
+        Util.Sleep(0.5);
+        Console.WriteLine("Another round is goind to start...");
+        Util.Sleep(1);
     }
 }

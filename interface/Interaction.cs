@@ -1,8 +1,8 @@
-using System.Security.Cryptography.X509Certificates;
+using superautomachines.game;
 using System.Text.RegularExpressions;
 using superautomachines.commands;
 using superautomachines.commands.data;
-using superautomachines.game;
+using Match = superautomachines.game.Match;
 
 public class Interaction
 {
@@ -29,11 +29,53 @@ public class Interaction
 
     public void Play()
     {
+        while(true)
+        {
+            PlayRound();
+            if(Match.Current.Life == 0)
+            {
+                Panels.GameOver();
+                Util.Sleep(3);
+                break;
+            }
+        }
+    }
+
+    public void PlayRound()
+    {
         command = new NewRound();
         command.Execute(CommandArgs.args);
 
         PickPlayers();
-        PlayRound();
+
+        Panels.IntroduceFight();
+
+        command = new PlayFight();
+
+        while(true)
+        {
+            FightCommandResponse result = (FightCommandResponse) command.Execute();
+
+            Console.WriteLine(result.Player.Name.ToUpper() + " against " + result.Opponent.Name.ToUpper());
+            Console.WriteLine();
+            Util.Sleep(1.2);
+            Console.WriteLine(result.Winner.Name.ToUpper() + " WON!");
+            Util.Sleep(1);
+
+            if(Round.Current.Opponents.Count == 0)
+            {
+                Match.Current.Trophies++;
+                Panels.FinalMessage(true);
+                break;
+            }
+
+            if(Round.Current.Players.Count == 0)
+            {
+                Match.Current.Life--;
+                Panels.FinalMessage(false);
+                break;
+            }
+        }
     }
 
     public void PickPlayers()
@@ -77,33 +119,6 @@ public class Interaction
                 break;
         }
     }
-
-    public void PlayRound()
-    {
-        Panels.ShowOpponentsTeam();
-        Util.Sleep(1.1);
-        Panels.VS();
-        Util.Sleep(1.1);
-        Panels.ShowPlayersTeam();
-        Util.Sleep(1.1);
-
-        command = new PlayRound();
-        RoundCommandResponse result = (RoundCommandResponse) command.Execute();
-
-        if (result.RoundResult == RoundResult.win)
-        {
-            Play();
-        }
-
-        Panels.PYouLost();
-        Game.Init();
-    }
-    
-    public void PlayX1()
-    {
-        
-    }
-
     public int GetInput()
     {
         var input = Console.ReadLine();
